@@ -1,0 +1,24 @@
+version: '2'
+services:
+  web:
+    image: denisdbell/petclinic:1.5.1
+    ports:
+     - "8080:8080"
+    volumes:
+      - log-volume:/log/
+  logstash: 
+      build:
+        context: logstash
+        dockerfile: Dockerfile   
+      volumes:
+        - log-volume:/log/
+  elasticsearch:
+     image: elasticsearch:5.5
+     ports:
+      - "9200:9200"   
+  kibana:
+     image: kibana:5.5 
+     ports:
+      - "5601:5601"   
+volumes:
+  log-volume:
